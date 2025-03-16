@@ -29,8 +29,19 @@ Deno.serve(async (req) => {
 
   const payload = await req.json();
 
+  const { data, error } = await supabase
+    .from("Tweets")
+    .select("tweet_id, text, userId")
+    .eq("userId", payload.userId)
+
+  console.log(data, error);
+
+  const existingTweets = data.map((tweet: any) => tweet.tweet_id);
+
+  const newTweets = payload.tweets.filter((tweet: any) => !existingTweets.includes(tweet.id));
+
   const tweets = [];
-  for (const tweet of payload.tweets) {
+  for (const tweet of newTweets) {
     const embedding = await getEmbeddingFromAPI(tweet.text);
     tweets.push({
       tweet_id: tweet.id,
@@ -43,11 +54,11 @@ Deno.serve(async (req) => {
 
   console.log(tweets);
 
-  const { data, error } = await supabase
+  const { data: insertedData, error: insertedError } = await supabase
     .from("Tweets")
     .insert(tweets)
 
-  console.log(data, error);
+  console.log(insertedData, insertedError);
 
   return new Response(JSON.stringify({ message: "Success" }), {
     status: 200,
