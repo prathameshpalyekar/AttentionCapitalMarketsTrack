@@ -46,6 +46,9 @@ Deno.serve(async (req) => {
       created_at: tweet.createdAt,
       embedding: embedding.values,
       userId: tweet.userId,
+      likes: tweet.likes,
+      retweets: tweet.retweets,
+      views: tweet.views,
     });
   }
 
