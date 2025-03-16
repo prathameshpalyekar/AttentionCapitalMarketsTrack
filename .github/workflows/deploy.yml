@@ -42,3 +42,4 @@ jobs:
         run: |
           supabase functions deploy add-user
           supabase functions deploy get-users
+          supabase functions deploy add-tweets

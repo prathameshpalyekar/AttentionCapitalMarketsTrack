@@ -306,9 +306,9 @@ import_map = "./functions/get-users/import_map.json"
 verify_jwt = false
 import_map = "./functions/add-user/import_map.json"
 
-[functions.getUsers]
+[functions.add-tweets]
 verify_jwt = false
-import_map = "./functions/getUsers/import_map.json"
+import_map = "./functions/add-tweets/import_map.json"
 
 [functions.getTweets]
 verify_jwt = false
