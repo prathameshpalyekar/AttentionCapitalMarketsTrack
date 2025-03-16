@@ -1,0 +1,44 @@
+name: Deploy Supabase Edge Function (Deno)
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: "1.40.0"  # Use the latest stable version of Deno
+
+      - name: Install Homebrew
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH
+          echo "/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+
+      - name: Verify Homebrew installation
+        run: |
+          brew --version
+
+      - name: Install Supabase CLI via Homebrew
+        run: |
+          brew install supabase/tap/supabase
+
+      - name: Authenticate Supabase
+        run: supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Link Supabase Project
+        run: supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+
+      - name: Deploy Edge Functions
+        run: |
+          supabase functions deploy add-user
+          supabase functions deploy get-users
