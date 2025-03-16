@@ -31,14 +31,11 @@ Deno.serve(async (req) => {
 
   const { data, error } = await supabase
     .from("Tweets")
-    .select("tweet_id, text, userId")
-    .eq("userId", payload.userId)
+    .select("tweet_id, userId")
 
-  console.log(data, error);
-
-  const existingTweets = data.map((tweet: any) => tweet.tweet_id);
-
-  const newTweets = payload.tweets.filter((tweet: any) => !existingTweets.includes(tweet.id));
+  const newTweets = payload.tweets.filter((tweet: any) => {
+    return !data.some((existingTweet: any) => existingTweet.tweet_id === tweet.id && existingTweet.userId === tweet.userId);
+  });
 
   const tweets = [];
   for (const tweet of newTweets) {
@@ -48,7 +45,7 @@ Deno.serve(async (req) => {
       text: tweet.text,
       created_at: tweet.createdAt,
       embedding: embedding.values,
-      userId: payload.userId,
+      userId: tweet.userId,
     });
   }
 
