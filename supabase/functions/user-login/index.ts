@@ -23,12 +23,29 @@ Deno.serve(async (req) => {
     });
   }
 
-  const { data } = await supabase
-    .from("Topics")
-    .select("*")
+  const { name, username } = await req.json();
 
-  return new Response(JSON.stringify({ message: "Success", topics: data }), {
+  const { data } = await supabase
+    .from("Users")
+    .select("*")
+    .eq("username", username)
+    .single();
+
+  if (!data) {
+    const { data: newUser, error: newUserError } = await supabase
+      .from("Users")
+      .insert({ name, username })
+      .select("*")
+      .single();
+
+    return new Response(JSON.stringify({ message: "Success", user: newUser }), {
+      status: 200,
+      headers,
+    });
+  }
+
+  return new Response(JSON.stringify({ message: "Success", user: data }), {
     status: 200,
     headers,
   });
-})
+});
