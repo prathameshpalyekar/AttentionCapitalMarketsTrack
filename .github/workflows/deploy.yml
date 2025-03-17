@@ -43,3 +43,4 @@ jobs:
           supabase functions deploy add-user
           supabase functions deploy get-users
           supabase functions deploy add-tweets
+          supabase functions deploy generate-topics

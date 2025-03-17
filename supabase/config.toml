@@ -302,6 +302,10 @@ import_map = "./functions/user-service/import_map.json"
 verify_jwt = false
 import_map = "./functions/get-users/import_map.json"
 
+[functions.generate-topics]
+verify_jwt = false
+import_map = "./functions/generate-topics/import_map.json"
+
 [functions.add-user]
 verify_jwt = false
 import_map = "./functions/add-user/import_map.json"
