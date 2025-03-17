@@ -44,3 +44,7 @@ jobs:
           supabase functions deploy get-users
           supabase functions deploy add-tweets
           supabase functions deploy generate-topics
+          supabase functions deploy fetch-topics
+          supabase functions deploy add-bet
+          supabase functions deploy fetch-bets
+          supabase functions deploy user-login

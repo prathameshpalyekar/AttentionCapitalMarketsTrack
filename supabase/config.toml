@@ -306,6 +306,22 @@ import_map = "./functions/get-users/import_map.json"
 verify_jwt = false
 import_map = "./functions/generate-topics/import_map.json"
 
+[functions.fetch-topics]
+verify_jwt = false
+import_map = "./functions/fetch-topics/import_map.json"
+
+[functions.add-bet]
+verify_jwt = false
+import_map = "./functions/add-bet/import_map.json"
+
+[functions.fetch-bets]
+verify_jwt = false
+import_map = "./functions/fetch-bets/import_map.json"
+
+[functions.user-login]
+verify_jwt = false
+import_map = "./functions/user-login/import_map.json"
+
 [functions.add-user]
 verify_jwt = false
 import_map = "./functions/add-user/import_map.json"
